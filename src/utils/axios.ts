@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {ElMessage} from "element-plus";
 import router from '../routers/router.ts'
-axios.defaults.baseURL = '//localhost:8080/'
+axios.defaults.baseURL = '//localhost:8808/mid_technique/'
 axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers['token'] = localStorage.getItem('token') || ''
