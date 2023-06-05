@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue'
-import {getUserInfo} from "../services/user.ts";
-import {findVarietyDict} from "../services/article.ts";
-
+import { getUserByStatusOrName} from "../services/article.ts";
 
 defineProps<{ msg: string }>()
-
 const count = ref(0)
-
-onMounted(async ()=>{
-  try {
-    const data = await findVarietyDict()
-    console.log(data)
-  }catch (err){
-    console.log(err)
+const user =reactive(
+  {
+    userArticleStatus: 3
   }
+)
+onMounted(async ()=>{
+  const data = await getUserByStatusOrName(user)
+  console.log(data)
 })
+
+
 
 </script>
 
