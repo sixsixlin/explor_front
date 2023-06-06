@@ -1,6 +1,6 @@
-import axios from 'axios'
-import {ElMessage} from "element-plus";
-import router from '../routers/router.ts'
+import axios from 'axios';
+import { ElMessage } from "element-plus";
+import router from '../routers/router.ts';
 axios.defaults.baseURL = '//localhost:8808/mid_technique/'
 axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
@@ -15,7 +15,7 @@ axios.interceptors.response.use(res =>{
         })
         return Promise.reject(res)
     }
-    if(res.data.resultCode != 200){
+    if(res.data.code != 20000){
         if(res.data.message)
             ElMessage({
                 showClose: true,

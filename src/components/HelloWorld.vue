@@ -16,9 +16,8 @@ async function getUser() {
   try {
     const tableData =await findArticle(params)
     console.log(tableData);
-    
   }catch (err){
-    // console.log(err)
+    console.log("getUser error")
   }
 }
 
@@ -26,8 +25,6 @@ async function getUser() {
 
 <template>
   <h1>{{ msg }}</h1>
- 
-  \
 </template>
 
 <style scoped>
