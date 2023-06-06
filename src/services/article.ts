@@ -7,3 +7,11 @@ import axios from '../utils/axios.ts'
 export function findArticle(data){
     return axios.post('/article/findArticle', data)
 }
+
+export function getUserList(){
+    return axios.post('/userManage/getUserList')
+}
+
+export function getUserByStatusOrName(params:any){
+    return axios.post('/userManage/getUserByStatusOrName',params)
+}

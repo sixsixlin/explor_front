@@ -6,7 +6,6 @@ const params=reactive({
   articleTitle:'农业'
 })
 defineProps<{ msg: string }>()
-
 const count = ref(0)
 
 onMounted(async ()=>{
@@ -20,6 +19,8 @@ async function getUser() {
     console.log("getUser error")
   }
 }
+
+
 
 </script>
 

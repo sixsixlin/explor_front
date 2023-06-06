@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import axios from 'axios';
 import { ElMessage } from "element-plus";
 import router from '../routers/router.ts';
 axios.defaults.baseURL = '//localhost:8808/mid_technique/'
+=======
+import axios from 'axios'
+import {ElMessage} from "element-plus";
+import router from '../routers/router.ts'
+axios.defaults.baseURL = '//82.156.171.219:8808/mid_technique/'
+>>>>>>> 82f2760ebdd5e484015f855a05d6538931152acf
 axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers['token'] = localStorage.getItem('token') || ''
