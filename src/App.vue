@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import mainPage from './view/mainPage.vue';
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
@@ -22,9 +21,12 @@ const handleSelect = (key: string, keyPath: string[]) => {
   >   
 <!-- 业务导航 -->
    <div class="flex-grow6 "></div>   
-    <el-menu-item  index="1">首页</el-menu-item>
+    <el-menu-item  index="1" > 
+      <router-link to="/">首页</router-link>
+    </el-menu-item>
     <el-menu-item index="2" >
-      科普资讯 </el-menu-item>
+      <router-link  to="/messagePage">科普资讯</router-link>
+    </el-menu-item>
     <el-menu-item index="3" >科幻世界</el-menu-item>
    
   <div class="flex-grow6"></div>
@@ -33,8 +35,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
   <div class="flex-grow0"></div>
   </el-menu>
 </el-affix>
-<mainPage></mainPage>
+<!-- <mainPage></mainPage> -->
   <!-- <HelloWorld msg="Vite + Vue" /> -->
+  <router-view></router-view>
 </template>
 
 <style scoped>

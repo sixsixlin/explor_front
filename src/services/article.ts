@@ -7,7 +7,13 @@ import axios from '../utils/axios.ts'
 export function findArticle(data){
     return axios.post('/article/findArticle', data)
 }
-
+/**
+ * 获取文章类型
+ * @returns 
+ */
+export function findVarietyDict(){
+  return axios.post('/article/findVarietyDict')
+}
 export function getUserList(){
     return axios.post('/userManage/getUserList')
 }
