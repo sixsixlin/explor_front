@@ -64,7 +64,7 @@ const  showArticle=(articleID)=>{
     <!-- 新闻目录 -->
     <div class="catecontent">
       <div class="articled">
-       <!-- 使用v-for指令遍历列表数据 -->
+      <!-- 使用v-for指令遍历列表数据 -->
       <ul>
         <li  v-for="item in state.Articlelist" :key="item.articleID">
           <!-- 使用flex布局让图片和文字在一行 -->
@@ -76,7 +76,6 @@ const  showArticle=(articleID)=>{
               <h3>{{ item.articleTitle }}</h3>
               <p class="vicearticle" v-html="item.articleContent"></p>
             </div>
-    
           </div>
         </li>
       </ul> 

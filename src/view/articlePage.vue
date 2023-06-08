@@ -9,7 +9,6 @@ onMounted(()=>{
   // 获取传参(文章) 并展示
   state.Article=  Route.query.article
 })
-
 </script>
 <template>
   <div class="aritcleContent">
