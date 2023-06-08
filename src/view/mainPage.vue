@@ -93,9 +93,6 @@ const  showArticle=(articleContend)=>{
         </li>
       </ul>
     </div>
-  <div class="leftArticle">
-    
-  </div>
   </div>
   <!-- 右侧新闻列表 -->
   <div class="righttnews">
@@ -103,6 +100,19 @@ const  showArticle=(articleContend)=>{
       <!-- **把图标调大点** -->
       <i class="iconfont icon-xinwen_o icons"></i>
       <span>时政新闻</span>
+       <!-- 时政新闻目录 -->
+       <ul>
+        <li  v-for="item in state[2]" :key="item.articleID">
+          <div class="flex-container" @click="showArticle(item.articleContent)">
+            <!-- 使用插值表达式显示文字描述 -->
+            <div class="describe">
+              <div class="describefont">
+                {{ item.articleTitle }}
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   <div class="rightArticle">
 
@@ -169,7 +179,13 @@ const  showArticle=(articleContend)=>{
   align-items: center;
   justify-content: center;
 }
-
+.describe:hover {
+ color:#029496e5 ;
+}
+/* 点击未松手样式变化 */
+.describe:active{
+  background-color: #d6dede;
+}
 .flex-container {
   display: flex;
   /* align-items: center; */
@@ -204,4 +220,14 @@ li{
 .imgs{
   align-self: flext-start;
 }
+.describefont{
+  font-size: 18px;
+}
+/* 调整 时政新闻的文字样式 */
+.describefont:hover{
+  font-size: 18px;
+  background-color: #F0FFFF;
+  color:#00CED1 ;
+}
+
 </style>
