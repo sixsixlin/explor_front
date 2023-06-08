@@ -50,8 +50,7 @@ const  showArticle=(articleID)=>{
       article:article?.articleContent
     }
   })
- 
- }
+}
 </script>
 <template>
 <!-- 主容器 -->

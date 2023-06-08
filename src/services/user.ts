@@ -1,5 +1,8 @@
 import axios from '../utils/axios.ts'
-
-export function getUserInfo(){
-    return axios.get('/test/hello')
+/**
+ * 登录
+ * @returns 
+ */
+export function login(data){
+    return axios.post('/doLogin/userLogin',data)
 }

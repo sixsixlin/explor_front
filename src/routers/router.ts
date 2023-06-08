@@ -5,6 +5,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 // 每个路由都需要映射到一个组件。
 // 我们后面再讨论嵌套路由。
 const routes = [
+  { path: "/", component: ()=>import('../view/mainPage.vue') },
   // 首页
     { path: "/home", 
       name:"home",

@@ -7,7 +7,7 @@ const state =reactive({
 onMounted(()=>{
 	const Route = useRoute(); //vue3 route传参通过userRoute接收
   // 获取传参(文章) 并展示
-  state.Article=  Route.query.article
+  state.Article=Route.query.article
 })
 </script>
 <template>

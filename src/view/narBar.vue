@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import router from '../routers/router.ts';
+import Login from '../view/login.vue';
 const activeIndex = ref('1')
+const loginJudge = ref<boolean>(false)
 const handleSelect = (key: string, keyPath: string[]) => {
   // activeIndex.value = '2'
   console.log(key, keyPath)
@@ -20,7 +22,20 @@ const handleSelect = (key: string, keyPath: string[]) => {
       name: 'sciencePage'
     })
   }
+  if (key == '5') {
+    // 弹出对话框
+    loginJudge.value = true
+  }
 }
+//子传父2.2 修改状态值 登录对话框
+const exVisible = () => {
+  try {
+    loginJudge.value = false
+  } catch (res) {
+    console.log(res);
+  }
+}
+
 </script>
 <template>
   <el-affix :offset="0">
@@ -34,14 +49,16 @@ const handleSelect = (key: string, keyPath: string[]) => {
       <el-menu-item index="2">
         科普资讯
       </el-menu-item>
-      <el-menu-item  index="3" id="exclass">科幻世界</el-menu-item>
+      <el-menu-item index="3" id="exclass">科幻世界</el-menu-item>
 
       <div class="flex-grow6"></div>
-      <el-menu-item index="5">登录/注册</el-menu-item>
+      <el-menu-item index="5"> 登录/注册 </el-menu-item>
       <el-menu-item index="6">文章编辑资格申请</el-menu-item>
       <div class="flex-grow0"></div>
     </el-menu>
   </el-affix>
+  <!--子传父2.3 :on-close与login.vue中的函数名onClose 对应  用于子组向父组件传值，即子组件调用父组件修改父组件中的值  -->
+  <Login :on-close="exVisible" :centerDialogVisible="loginJudge"></Login>
 </template>
 <style setup scoped>
 .flex-grow6 {
