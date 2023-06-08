@@ -22,22 +22,23 @@ axios.interceptors.response.use(res =>{
                 message: res.data.message
             })
         // 416表示未登录
-        if(res.data.resultCode == 416){
+        if(res.data.code == 416){
             // 先登录才能发请求,并跳转到登录接界面
             router.push({
                 path:'/login'
             })
         }
         return Promise.reject(res)
-    }
+    }        
     // 若数据正确 携带登录授权的token值
-    if(res.data.data && window.location.hash == '#/login'){
-        // 登录之后的响应数据
-        localStorage.setItem('token',res.data.data)
-        // axios的每次请求都携带token
-        axios.defaults.headers['token']=res.data.data
-        return
-    }
+    if(res.data.data.token != null){
+      console.log("token");
+      // 登录之后的响应数据
+      localStorage.setItem('token',res.data.data.token)
+      // axios的每次请求都携带token
+      axios.defaults.headers['token']=res.data.data.token
+      return
+  }
     return res.data
 })
 export default axios
