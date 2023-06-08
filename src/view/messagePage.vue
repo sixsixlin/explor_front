@@ -1,6 +1,7 @@
 <!-- 科普资讯界面 -->
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue';
+import router from '../routers/router.ts';
 import { findArticle, findVarietyDict } from "../services/article.ts";
 import { Article } from '../types/article';
 const params=reactive({
@@ -9,8 +10,10 @@ const params=reactive({
 })
 const state =reactive<{
   Articlelist:Article[]
+  judgeShowArticle:number//显示文章 隐藏目录
 }>({
-  Articlelist:[]
+  Articlelist:[],
+  judgeShowArticle:1
 })
 // 文章类型字典
 let articletags=reactive([])
@@ -20,6 +23,10 @@ onMounted(async ()=>{
   articletags =articletag.data
   // 通过标签获取文章
   await getArticleByLable()
+  // state.judgeShowArticle = false
+})
+router.beforeResolve(()=>{
+  state.judgeShowArticle ++
 })
 const count = ref(0)
 /** 获取科学资讯新闻 */
@@ -31,33 +38,34 @@ async function getArticleByLable() {
     // 根据标签获取文章
     const tableData =await findArticle(params)
     state.Articlelist = tableData.data
-    console.log(state.Articlelist[0]);
-    console.log(state.Articlelist[0].articleContent);
   }catch (err){
     console.log("getUser error")
   }
 }
-const list= [
-        {
-          id: 1,
-          image: "https://www.bing.com/images/search?view=detailV2&ccid=2SVkhK%2fY&id=B02783D8FBBA8823FBB359BB50F8FCBD51305342&thid=OIP.2SVkhK_YtWBCkuHkDevbygHaEK&mediaurl=https%3a%2f%2fwww.bingimg.cn%2fdown%2fOHR.BubbleNebula_ZH-CN2787112807_1920x1080.jpg&exph=1080&expw=1920&q=%e5%9b%be&simid=608004951142976433&FORM=IRPRST&ck=8E1419DEDD1EF8849D2D5F7FFCE9730C&selectedIndex=2",
-          description: "This is a random image",
-        },
-        {
-          id: 2,
-          image: "https://www.bing.com/images/search?view=detailV2&ccid=oX4T0LU1&id=F0A82A3E99EC7E2D3A0211E7E20085D2AADDCB56&thid=OIP.oX4T0LU1Civ6PI0J-tZyLgHaEK&mediaurl=https%3a%2f%2fwww.bingimg.cn%2fdown%2fOHR.EvergladesShowers_ZH-CN9209435866_1920x1080.jpg&exph=1080&expw=1920&q=%e5%9b%be&simid=608053359698272589&FORM=IRPRST&ck=FBD4EB7702199F642E0802E7FBB1C80D&selectedIndex=1",
-          description: "This is another random image",
-        },
-        {
-          id: 3,
-          image: "https://picsum.photos/id/239/200/300",
-          description: "This is yet another random image",
-        },
-      ]
+/**
+  * 路由跳转文章具体内容
+  */
+const  showArticle=(articleID)=>{
+  // 展示文章
+  if( state.judgeShowArticle == -1){
+    state.judgeShowArticle = 0
+  }
+  state.judgeShowArticle = -1
+  console.log(articleID);
+  var article = state.Articlelist.find(obj => obj.articleID === articleID);
+  // 路径跳转 文章作为参数传过去
+  router.push({
+    name:'articlePage',
+    query:{
+      article:article?.articleContent
+    }
+  })
+ 
+ }
 </script>
 <template>
 <!-- 主容器 -->
-  <div class="maincontent">
+  <div class="maincontent" v-show="state.judgeShowArticle !=0">
     <div class="stitle">
       <i class="iconfont icon-xinwen"></i>
       <h3>科普资讯</h3>
@@ -67,11 +75,10 @@ const list= [
     <div class="catecontent">
       <div class="articled">
        <!-- 使用v-for指令遍历列表数据 -->
-       
       <ul>
         <li  v-for="item in state.Articlelist" :key="item.articleID">
           <!-- 使用flex布局让图片和文字在一行 -->
-          <div class="flex-container">
+          <div class="flex-container" @click="showArticle(item.articleID)">
             <!-- 使用v-bind指令绑定图片的src属性 -->
             <img v-bind:src="item.imgURL" />
             <!-- 使用插值表达式显示文字描述 -->
@@ -84,15 +91,11 @@ const list= [
         </li>
       </ul> 
       </div>
-        <!-- <ul 
-        v-for="item in state.Articlelist"
-        v-if="state.Articlelist "
-        >
-          <li > <div v-html="item.articleContent"></div></li>
-
-        </ul> -->
-        
     </div>
+  </div>
+  <div v-show="state.judgeShowArticle == 0">
+    <!-- <articlePage></articlePage> -->
+    <router-view></router-view>
   </div>
 </template>
 
