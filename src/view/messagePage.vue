@@ -10,10 +10,8 @@ const params=reactive({
 })
 const state =reactive<{
   Articlelist:Article[]
-  judgeShowArticle:number//显示文章 隐藏目录
 }>({
-  Articlelist:[],
-  judgeShowArticle:1
+  Articlelist:[]
 })
 // 文章类型字典
 let articletags=reactive([])
@@ -23,10 +21,6 @@ onMounted(async ()=>{
   articletags =articletag.data
   // 通过标签获取文章
   await getArticleByLable()
-  // state.judgeShowArticle = false
-})
-router.beforeResolve(()=>{
-  state.judgeShowArticle ++
 })
 const count = ref(0)
 /** 获取科学资讯新闻 */
@@ -46,14 +40,10 @@ async function getArticleByLable() {
   * 路由跳转文章具体内容
   */
 const  showArticle=(articleID)=>{
-  // 展示文章
-  if( state.judgeShowArticle == -1){
-    state.judgeShowArticle = 0
-  }
-  state.judgeShowArticle = -1
-  console.log(articleID);
+ // 展示文章
   var article = state.Articlelist.find(obj => obj.articleID === articleID);
-  // 路径跳转 文章作为参数传过去
+  //路由跳转
+  
   router.push({
     name:'articlePage',
     query:{
@@ -65,7 +55,7 @@ const  showArticle=(articleID)=>{
 </script>
 <template>
 <!-- 主容器 -->
-  <div class="maincontent" v-show="state.judgeShowArticle !=0">
+  <div class="maincontent"  >
     <div class="stitle">
       <i class="iconfont icon-xinwen"></i>
       <h3>科普资讯</h3>
@@ -93,10 +83,7 @@ const  showArticle=(articleID)=>{
       </div>
     </div>
   </div>
-  <div v-show="state.judgeShowArticle == 0">
-    <!-- <articlePage></articlePage> -->
-    <router-view></router-view>
-  </div>
+
 </template>
 
 <style scoped>
