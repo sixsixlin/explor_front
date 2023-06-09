@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { onUpdated, reactive } from 'vue';
 import { login } from '../services/user';
 // 父向子传值1.1 login子类 定义在 Props定义centerDialogVisible 作为组件的一个属性 为父组件传值提供属性
 //子传父 2.1  onClose自定义函数用于子组件向父组件传值
@@ -15,28 +15,23 @@ const state=reactive({
   userName:'',
   password:'',
 })
+onUpdated(()=>{
+  // 
+  state.userName=''
+  state.password=''
+})
 //登录 提交账号密码
 async function onSubmit(){
-  console.log(state);
-  console.log(localStorage.getItem("token"));
-  
   try{
-    const result = await login(state)
-    console.log(result);
-    
     // 发送异步请求 axios设置token的值
-    
-    // 修改 使导航栏登录注册按钮替换或消失
-
+    await login(state)
     // 关闭对话框
     props.onClose()
     // 若登录成功 弹窗提醒
-
     // 若登录失败 弹窗提醒
   }catch(res){
     console.log(res);
   }
-  
 }
 </script>
 <template>
@@ -59,7 +54,7 @@ async function onSubmit(){
       <el-input v-model="state.userName" />
     </el-form-item>
     <el-form-item label="密码">
-      <el-input v-model="state.password"/>
+      <el-input show-password v-model="state.password"/>
     </el-form-item>
   </el-form>
   <span slot="footer" class="dialog-footer">

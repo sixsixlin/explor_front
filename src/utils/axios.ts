@@ -32,11 +32,14 @@ axios.interceptors.response.use(res =>{
     }        
     // 若数据正确 携带登录授权的token值
     if(res.data.data.token != null){
-      console.log("token");
       // 登录之后的响应数据
       localStorage.setItem('token',res.data.data.token)
       // axios的每次请求都携带token
       axios.defaults.headers['token']=res.data.data.token
+      ElMessage({
+        message: '用户登录成功',
+        type: 'success',
+      })
       return
   }
     return res.data
