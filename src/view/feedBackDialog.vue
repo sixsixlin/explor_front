@@ -20,16 +20,12 @@ function gettime(){
   var year = date.getFullYear();
   // 获取月份（0-11，需要加1）
   var month = date.getMonth() + 1;
-
   // 获取日期（1-31）
   var day = date.getDate();
-
   // 获取小时（0-23）
   var hour = date.getHours();
-
   // 获取分钟（0-59）
   var minute = date.getMinutes();
-
   // 拼接成字符串
   var dateString = year + "-" + month + "-" + day + " " + hour + ":" + minute;
   return dateString
@@ -38,7 +34,6 @@ function gettime(){
 async function onSubmit(){
   form.reactTime = gettime()
   try{
-    console.log(form);
     const res = await feedBackMsg(form)
     if(res.code == '20000'){
       ElMessage({
@@ -50,9 +45,7 @@ async function onSubmit(){
     props.onClose()
   }catch(res){
     console.log('error'+res);
-  }
-
-  
+  }  
 }
 </script>
 <template>

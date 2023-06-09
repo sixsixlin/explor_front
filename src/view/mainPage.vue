@@ -46,12 +46,13 @@ async function getArticleByLable() {
 /**
   * 路由跳转文章具体内容
   */
-const  showArticle=(articleContend)=>{
+const  showArticle=(articleContend,articleID)=>{
   //路由跳转
   router.push({
     name:'articlePage',
     query:{
-      article:articleContend
+      article:articleContend,
+      articleID: articleID
     }
   })
 }
@@ -64,7 +65,7 @@ const  showArticle=(articleContend)=>{
     <el-carousel>
       <el-carousel-item v-for="item in state[0]" v-if="state[0]" :key="item">
         <h3 class="small justify-center" text="2xl">
-          <div class="imgcontent" @click="showArticle(item.articleContent)">
+          <div class="imgcontent" @click="showArticle(item.articleContent,item.articleID)">
           <img class="imgs" :src="item.imgURL"  alt="">
         </div>
         </h3>

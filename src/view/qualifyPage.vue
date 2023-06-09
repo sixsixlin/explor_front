@@ -30,9 +30,7 @@ async function getQualification(){
     const res = await qualification(userToken)  // 查找用户资格状态
     state.status=res.data
   }catch(res){
-    
     console.log("error"+  res);
-    
   }
 }
 // 申请资格
@@ -61,8 +59,11 @@ async function onApply(){
   
   if(userToken.token  !=null&& userToken.token != '' && state.status==1){
     // 获得申请资格
-  const res= await applyQualification(userToken)
-  console.log(res);
+  await applyQualification(userToken)
+  ElMessage({
+      message: '已提交申请 请耐心等待',
+      type: 'success',
+  })
   }}catch(res){
     ElMessage({
       message: '资格申请有误',

@@ -47,7 +47,8 @@ const  showArticle=(articleID)=>{
   router.push({
     name:'articlePage',
     query:{
-      article:article?.articleContent
+      article:article?.articleContent,
+      articleID: article?.articleID
     }
   })
 }
