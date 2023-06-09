@@ -3,10 +3,13 @@ import { ElMessage } from "element-plus";
 import { onMounted, onUpdated, ref } from 'vue';
 import router from '../routers/router.ts';
 import Login from '../view/login.vue';
+import FeedBackDialog from './feedBackDialog.vue';
 import QualifyPage from "./qualifyPage.vue";
 const activeIndex = ref('1')
 const loginJudge = ref<boolean>(false)//登录对话框 状态标识
-const EditAriticle=ref<boolean>(false)//用户文章资格申请 状态标识
+const editAriticle=ref<boolean>(false)//用户文章资格申请 状态标识
+const feedbackJudge=ref<boolean>(false)//用户反馈状态标识
+const status = ref<boolean>(true)//申请资格按钮 是否可用
 const handleSelect = (key: string, keyPath: string[]) => {
   // activeIndex.value = '2'
   console.log(key, keyPath)
@@ -51,7 +54,15 @@ const exVisible = () => {
 // 关闭 资格申请对话框
 const exQualifyVisible = () => {
   try {
-    EditAriticle.value = false
+    editAriticle.value = false
+  } catch (res) {
+    console.log(res);
+  }
+}
+// 关闭 反馈对话框
+const exFeedBackVisible = () => {
+  try {
+    feedbackJudge.value = false
   } catch (res) {
     console.log(res);
   }
@@ -63,13 +74,16 @@ onUpdated( ()=>{
 onMounted(()=>{
   getLocalToken()
 })
+
 // 登录图标跟随token的值变化
 function getLocalToken(){
   const token =localStorage.getItem("token")
   if(token !=null){
     visiblelogin.value =false
+    status.value = false
   }else{
     visiblelogin.value =true
+    status.value = true//文章编辑图标不可用
   }
 }
 
@@ -98,13 +112,16 @@ function getLocalToken(){
       /> </template>
       <el-menu-item index="6-1">用户注销</el-menu-item>
      </el-sub-menu >
-      <el-menu-item index="7" @click="EditAriticle=true">文章编辑资格申请</el-menu-item>
+      <el-menu-item index="7" @click="editAriticle=true" :disabled=" status">文章编辑资格申请</el-menu-item>
+      <el-menu-item index="8" @click="feedbackJudge=true">用户反馈</el-menu-item>
       <div class="flex-grow0"></div>
     </el-menu>
   </el-affix>
   <!--子传父2.3 :on-close与login.vue中的函数名onClose 对应  用于子组向父组件传值，即子组件调用父组件修改父组件中的值  -->
   <Login :on-close="exVisible" :centerDialogVisible="loginJudge"></Login>
-  <QualifyPage :on-close="exQualifyVisible" :centerDialogVisible="EditAriticle"></QualifyPage>
+  <QualifyPage :on-close="exQualifyVisible" :centerDialogVisible="editAriticle"></QualifyPage>
+  <FeedBackDialog :on-close="exFeedBackVisible" :centerDialogVisible="feedbackJudge"></FeedBackDialog>
+  
 </template>
 <style setup scoped>
 .flex-grow6 {
