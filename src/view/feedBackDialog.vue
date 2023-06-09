@@ -50,7 +50,7 @@ async function onSubmit(){
 </script>
 <template>
 <el-dialog
-  title="用户文章编辑资格申请"
+  title="用户反馈"
   :before-close="onClose"
   :model-value="centerDialogVisible"
   destroy-on-close

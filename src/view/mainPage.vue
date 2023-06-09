@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-import { onMounted, reactive } from 'vue';
+import { storeToRefs } from 'pinia';
+import { onBeforeUpdate, onMounted, onUpdated, reactive } from 'vue';
 import router from '../routers/router.ts';
 import { findArticle, findVarietyDict } from "../services/article.ts";
+import { articleStatusEditStore } from '../store/statusEdit';
 import { Article } from '../types/article';
+const statusEx = articleStatusEditStore()//引入pinia
+const { statusEdit, numberEdit} = storeToRefs(statusEx)
 // 
 const state =reactive<{
   SciArticlelist:Article[],//科幻新闻
@@ -27,6 +31,26 @@ onMounted(async ()=>{
   articletags =articletag.data
   // 通过标签获取文章
   await getArticleByLable()
+  if(statusEx.statusEdit){
+    console.log("ex true");
+  }
+})
+onUpdated(async()=>{
+  if(statusEx.statusEdit){
+    console.log("ex true");
+  }
+})
+router.beforeResolve(to => {
+  // 如果路由需要摄像头权限，请求用户授权
+  if (to.meta.requiresCamera) {
+    console.log("*-----");
+    console.log(statusEx.statusEdit);
+  }
+})
+onBeforeUpdate(()=>{
+  if(statusEx.statusEdit){
+    console.log("ex true");
+  }
 })
 /** 获取科学资讯新闻 */
 async function getArticleByLable() {

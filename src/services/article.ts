@@ -21,3 +21,9 @@ export function getUserList(){
 export function getUserByStatusOrName(params:any){
     return axios.post('/userManage/getUserByStatusOrName',params)
 }
+/**
+ * 文章内容更新
+ */
+export function updateArticle(data) {
+  return axios.post('/article/updateArticle',   data)
+}
