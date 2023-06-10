@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ElMessage } from "element-plus";
-import { onMounted, onUpdated, reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { findArticle, updateArticle } from '../services/article';
 import { qualification } from '../services/user';
@@ -49,10 +49,7 @@ onMounted(async () => {
   // 获取传参(文章) 并展示
   state.Articles = Route.query.article
   articlecondition.articleID = Route.query.articleID//查询文章 
-  
-})
-onUpdated(()=>{
-  state.Articles = Route.query.article
+  getQualification()
 })
 // 获取用户资格状态
 async function getQualification() {
