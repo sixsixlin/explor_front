@@ -49,12 +49,10 @@ onMounted(async () => {
   // 获取传参(文章) 并展示
   state.Articles = Route.query.article
   articlecondition.articleID = Route.query.articleID//查询文章 
-  console.log(articleresult);
   
 })
 onUpdated(()=>{
   state.Articles = Route.query.article
-  console.log(state.Articles );
 })
 // 获取用户资格状态
 async function getQualification() {
@@ -72,7 +70,6 @@ async function editArticlebtn() {
   const res = await findArticle(articlecondition)
   editVisible.Visible = true
   articleresult = res.data[0]
-  console.log(articleresult);
 }
 
 // 修改添加文章

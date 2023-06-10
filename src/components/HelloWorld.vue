@@ -14,7 +14,6 @@ onMounted(async ()=>{
 async function getUser() {
   try {
     const tableData =await findArticle(params)
-    console.log(tableData);
   }catch (err){
     console.log("getUser error")
   }

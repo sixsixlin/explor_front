@@ -57,7 +57,6 @@ async function getArticleByLable() {
       // 根据标签获取文章
       const tableData = await findArticle(params)
       state[i] = tableData.data
-      console.log(state[i]);
     }
   } catch (err) {
     console.log("getUser error")
