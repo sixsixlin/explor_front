@@ -1,20 +1,17 @@
 <script lang="ts" setup>
 import { ElMessage } from "element-plus";
-import { onMounted, reactive } from 'vue';
+import { onMounted, onUpdated, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { findArticle, updateArticle } from '../services/article';
 import { qualification } from '../services/user';
 import { articleStatusEditStore } from '../store/statusEdit';
 import { Article } from '../types/article';
-
-interface Props {
-  onUpdate?: () => void
-}
-
-const props = defineProps<Props>()
-
 const statusEx = articleStatusEditStore()
-const editVisible = reactive({ Visible: false })//编辑文章按钮是否显示
+const editVisible = reactive<{Visible: boolean ,atrticleVisible:boolean}>({
+    Visible: false ,
+    atrticleVisible:true
+
+})//编辑文章按钮是否显示
 const state = reactive({//文章信息
   Articles: "",
 })
@@ -47,12 +44,17 @@ const status = reactive<{
   token: '',
   qualification: -1
 })
+const Route = useRoute(); //vue3 route传参通过userRoute接收
 onMounted(async () => {
-  const Route = useRoute(); //vue3 route传参通过userRoute接收
   // 获取传参(文章) 并展示
   state.Articles = Route.query.article
-  articlecondition.articleID = Route.query.articleID//查询文章
-  getQualification()//获取资格状态
+  articlecondition.articleID = Route.query.articleID//查询文章 
+  console.log(articleresult);
+  
+})
+onUpdated(()=>{
+  state.Articles = Route.query.article
+  console.log(state.Articles );
 })
 // 获取用户资格状态
 async function getQualification() {
@@ -80,9 +82,7 @@ async function onSubmit() {
     if (res.data == 1) {
       // 修改 文章自刷新 状态
       statusEx.exEditStatusTrue()
-      props.onUpdate()
     }
-    // console.log(articleresult);
     ElMessage({
       message: '文章修改成功',
       type: 'success',
@@ -92,6 +92,9 @@ async function onSubmit() {
   //关闭对话框
   editVisible.Visible = false
 }
+const updateContent=()=>{
+
+}
 </script>
 <template>
   <div class="aritcleContent">
@@ -99,7 +102,7 @@ async function onSubmit() {
     <div class="editbtn" v-if="status.qualification == 3">
       <el-button type="primary" @click="editArticlebtn">文章编辑</el-button>
     </div>
-    <div v-html=state.Articles>
+    <div v-html=state.Articles >
     </div>
 
     <!-- 对话框 -->
