@@ -1,12 +1,33 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus';
 import { ElMessage } from "element-plus";
-import { reactive, ref } from 'vue';
-import { feedBackMsg } from '../services/user';
+import { onMounted, reactive, ref } from 'vue';
+import { feedBackMsg, getUsermsg } from '../services/user';
+ 
 const ruleFormRef = ref<FormInstance>()
 interface Props {
   centerDialogVisible: boolean
   onClose: () => void
+}
+
+// 用户信息
+const status = reactive<{
+  token: string,
+  qualification: number
+}>({
+  token: '',
+  qualification: -1
+}) 
+
+onMounted(async ()=>{
+  status.token = localStorage.getItem("token") || ''
+  //根据token获取用户手机号
+  functionGetUsermsg()
+})
+async function  functionGetUsermsg(){
+  const res = await getUsermsg(status)  // 查找用户资格状态
+  form.reactPhone = res.data//资格存储资格状态
+  
 }
 const props = defineProps<Props>()
 const form = reactive({

@@ -27,3 +27,9 @@ export function getUserByStatusOrName(params:any){
 export function updateArticle(data) {
   return axios.post('/article/updateArticle',   data)
 }
+/**
+ * 通过token获取用户
+ */
+export function getUsermsg(data:any){
+  return axios.post('/reactManage/insertReactInfo',data)
+}

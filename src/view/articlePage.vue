@@ -94,7 +94,7 @@ const updateContent=()=>{
   <div class="aritcleContent">
     <!-- 编辑文章按钮 -->
     <div class="editbtn" v-if="status.qualification == 3">
-      <el-button type="primary" @click="editArticlebtn">文章编辑</el-button>
+      <el-button type="primary" @click="editArticlebtn" >文章编辑</el-button>
     </div>
     <div v-html=state.Articles >
     </div>

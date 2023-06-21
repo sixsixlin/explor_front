@@ -25,3 +25,9 @@ export function applyQualification(data:any){
 export function feedBackMsg(data:any){
   return axios.post('/reactManage/insertReactInfo',data)
 }
+/**
+ * 通过token获取用户
+ */
+export function getUsermsg(data:any){
+  return axios.post('/doLogin/getUserName',data)
+}
